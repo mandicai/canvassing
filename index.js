@@ -11,7 +11,7 @@ let groupSpacing = 4,
   offsetTop = height / 5,
   cellSize = 5
 
-d3.range(300).forEach((el, index) => {
+d3.range(700).forEach((el, index) => {
   let x0 = Math.floor(index / 100) % 10, x1 = Math.floor(index % 10)
   let y0 = Math.floor(index / 1000), y1 = Math.floor(index % 100 / 10)
 
@@ -75,7 +75,8 @@ d3.select('#original').on('click', function (d) {
 
 function update() {
   databind(data)
-  let timer = d3.timer(function(elapsed) {
+  let timer = d3.timer(elapsed => {
+    console.log(elapsed)
     draw()
     if (elapsed > 1000) { timer.stop() }
   })
