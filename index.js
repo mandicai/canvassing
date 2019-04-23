@@ -3,26 +3,27 @@
 
 let data = []
 
-let width = 750,
-  height = 400
+let width = 450,
+  height = 750
 
 let groupSpacing = 4,
-  cellSpacing = 2,
+  cellSpacing = 3,
   offsetTop = height / 5,
-  cellSize = 5
+  cellSize = 6
 
-d3.range(700).forEach((el, index) => {
-  let x0 = Math.floor(index / 100) % 10, x1 = Math.floor(index % 10)
-  let y0 = Math.floor(index / 1000), y1 = Math.floor(index % 100 / 10)
+d3.range(4160).forEach((el, index) => {
+  let x1 = Math.floor(index % 10)
+  let y0 = Math.floor(index / 52) * (cellSize + cellSpacing), y1 = Math.floor(index % 100 / 10)
+  let x0 = ((cellSize + cellSpacing) * index) - (52 * (cellSize + cellSpacing) * (y0 / (cellSize + cellSpacing)))
 
   data.push({
     value: el,
-    x: groupSpacing * x0 + (cellSpacing + cellSize) * (x1 + x0 * 10),
-    y: groupSpacing * y0 + (cellSpacing + cellSize) * (y1 + y0 * 10),
-    sourceX: groupSpacing * x0 + (cellSpacing + cellSize) * (x1 + x0 * 10),
-    sourceY: groupSpacing * y0 + (cellSpacing + cellSize) * (y1 + y0 * 10),
-    targetX: groupSpacing * x0 + (cellSpacing + cellSize) * (x1 + x0 * 10),
-    targetY: groupSpacing * y0 + (cellSpacing + cellSize) * (y1 + y0 * 10)
+    x: x0,
+    y: y0,
+    sourceX: x0,
+    sourceY: y0,
+    targetX: x0,
+    targetY: y0
    })
 })
 
@@ -76,7 +77,6 @@ d3.select('#original').on('click', function (d) {
 function update() {
   databind(data)
   let timer = d3.timer(elapsed => {
-    console.log(elapsed)
     draw()
     if (elapsed > 1000) { timer.stop() }
   })

@@ -2,8 +2,13 @@ body, button {
   font-family: 'Quicksand', sans-serif;
 }
 
+h1 {
+  font-family: 'Space Mono', monospace;
+  font-weight: regular;
+}
+
 #stuff {
-  margin-top: 5%;
+  margin-top: 75px;
   margin-left: 5%;
 }
 

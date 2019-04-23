@@ -4,16 +4,27 @@
 <head>
   <title>A Canvas Exploration</title>
   <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Space+Mono" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
   <link href="index.css" rel="stylesheet">
 </head>
 
 <body>
   <div id="stuff">
-    <button id="original">Original</button>
-    <button id="move">Move</button>
-    <div id="container"></div>
+    <div class="ui two column centered grid stackable">
+      <div class="ten wide column">
+        <h1>putting time into perspective</h1>
+      </div>
+      <div class="six wide column">
+        <div id="container"></div>
+        <button id="original">Original</button>
+        <button id="move">Move</button>
+      </div>
+    </div>
   </div>
-
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+    integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
   <script src="https://d3js.org/d3.v5.min.js"></script>
   <script src="index.js"></script>
 </body>
