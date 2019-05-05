@@ -1,17 +1,38 @@
 body, button {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Source Serif Pro', serif;
 }
 
 h1 {
-  font-family: 'Space Mono', monospace;
+  font-family: 'Allerta Stencil', monospace;
   font-weight: regular;
 }
 
-#stuff {
-  margin-top: 75px;
-  margin-left: 5%;
+.header {
+  text-align: center;
+  padding: 200px 5% 50px 5%;
+  background-color: #F4F4F4;
+}
+
+.header .inspo {
+  display: block;
+  font-size: 12px;
+  padding-top: 15px;
+}
+
+.content {
+  padding: 0 15% 0 15%;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.ui.stackable.grid {
+  padding: 0 15% 0 15%;
 }
 
 #container {
   margin-top: 2%;
+}
+
+p {
+  text-indent: 25px;
 }
