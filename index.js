@@ -4,13 +4,13 @@
 // set up variables
 let data = []
 
-let width = 450,
-  height = 500
+let width = 250,
+  height = 400
 
 let groupSpacing = 4,
   cellSpacing = 2,
   offsetTop = height / 5,
-  cellSize = 4
+  cellSize = 3
 
 // create the initial set of data points
 // 4160 = 80 * 52 (the average US lifespan in weeks)
@@ -109,9 +109,11 @@ function databind(data) {
     .attr('width', 0)
     .attr('height', 0)
     .attr('fillStyle', (d, i) => {
+      return '#E0E0E0'
+
       // quarterly
-      if (i % 13 === 0) return '#EF06BD'
-      else return '#E0E0E0'
+      // if (i % 13 === 0) return '#EF06BD'
+      // else return '#E0E0E0'
 
       // bi-yearly
       // if (i % 26 === 0) return '#EF06BD'
