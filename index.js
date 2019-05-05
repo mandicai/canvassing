@@ -1,16 +1,19 @@
 // TAKEAWAYS
 // to create viz with canvas, two steps are required: 1) bind the data 2) draw the viz
 
+// set up variables
 let data = []
 
 let width = 450,
-  height = 750
+  height = 500
 
 let groupSpacing = 4,
-  cellSpacing = 3,
+  cellSpacing = 2,
   offsetTop = height / 5,
-  cellSize = 6
+  cellSize = 4
 
+// create the initial set of data points
+// 4160 = 80 * 52 (the average US lifespan in weeks)
 d3.range(4160).forEach((el, index) => {
   let x1 = Math.floor(index % 10)
   let y0 = Math.floor(index / 52) * (cellSize + cellSpacing), y1 = Math.floor(index % 100 / 10)
@@ -23,10 +26,12 @@ d3.range(4160).forEach((el, index) => {
     sourceX: x0,
     sourceY: y0,
     targetX: x0,
-    targetY: y0
+    targetY: y0,
+    lifeSpan: 1872
    })
 })
 
+// set up the canvas by attaching it to the div container
 let canvas = d3.select('#container')
   .append('canvas')
   .attr('width', width)
@@ -75,16 +80,17 @@ d3.select('#original').on('click', function (d) {
 })
 
 function update() {
-  databind(data)
-  let timer = d3.timer(elapsed => {
-    draw()
+  databind(data) // bind the data
+
+  let timer = d3.timer(elapsed => { // using d3.timer allows transitions to be shown
+    draw() // draw onto the canvas context using d3.timer
     if (elapsed > 1000) { timer.stop() }
   })
 }
 
 function databind(data) {
-  let colourScale = d3.scaleSequential(d3.interpolateBrBG)
-    .domain(d3.extent(data, d => d.value))
+  // let colourScale = d3.scaleSequential(d3.interpolateBrBG)
+  //   .domain(d3.extent(data, d => d.value))
 
   // bind the data
   let join = custom.selectAll('custom.rect')
@@ -102,7 +108,20 @@ function databind(data) {
     })
     .attr('width', 0)
     .attr('height', 0)
-    .attr('fillStyle', (d, i) => { return colourScale(i) })
+    .attr('fillStyle', (d, i) => {
+      // quarterly
+      if (i % 13 === 0) return '#EF06BD'
+      else return '#E0E0E0'
+
+      // bi-yearly
+      // if (i % 26 === 0) return '#EF06BD'
+      // else return '#E0E0E0'
+
+      // if (i < d.lifeSpan) return '#EF06BD'
+      // else return '#E0E0E0'
+
+      // return colourScale(i)
+    })
 
   // merge allows enter and update to be combined, reducing lines of code
   join.merge(enterSel)
