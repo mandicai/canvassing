@@ -3,24 +3,42 @@
 
 <head>
   <title>A Canvas Exploration</title>
-  <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Space+Mono" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Allerta+Stencil" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
   <link href="index.css" rel="stylesheet">
 </head>
 
 <body>
-  <div id="stuff">
-    <div class="ui two column centered grid stackable">
-      <div class="ten wide column">
-        <h1>putting time into perspective</h1>
-        <p>Stumbled upon vis of the human perception of time.</p>
-      </div>
-      <div class="six wide column">
-        <div id="container"></div>
-        <button id="original">Original</button>
-        <button id="move">Move</button>
-      </div>
+  <div class="header">
+    <div></div><div></div>
+    <h1>Putting Time into Perspective</h1>
+    <span>By Mandi Cai</span>
+    <span class="inspo"><i>This story was heavily inspired by WaitButWhy's piece, <a href="https://waitbutwhy.com/2015/12/the-tail-end.html">The Tail End</a>.</i></span>
+  </div>
+  <div class="content">
+    <p>
+      Our perception of time changes as we age. When we're younger and experiencing the pieces of the world
+      entirely as new stimuli, we perceive time as passing slower because everything requires adjustment. But
+      when we age and settle into a routine, an alignment of tasks that we are familiar with to the point
+      of autocompleting them, time passes a lot more quickly.
+    </p>
+  </div>
+  <div class="ui two column centered grid stackable">
+    <div class="ten wide column">
+      <p>
+        This grid represents the average US life expectancy - 80 years, according to the
+        <a href="https://www.cdc.gov/nchs/fastats/life-expectancy.htm">CDC</a> in 2016, which boasts
+        a lengthy 78.6 years. Each square represents a week, and each row represents one year.
+      </p>
+      <p>
+        It doesn't seem like much. But let's take a look at the life spans from previous centuries.
+      </p>
+    </div>
+    <div class="six wide column">
+      <div id="container"></div>
+      <button id="original">Original</button>
+      <button id="move">Move</button>
     </div>
   </div>
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"
