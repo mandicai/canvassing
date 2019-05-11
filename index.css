@@ -2,7 +2,7 @@ body, button {
   font-family: 'Source Serif Pro', serif;
 }
 
-h1 {
+h1, h2, b {
   font-family: 'Allerta Stencil', monospace;
   font-weight: regular;
 }
@@ -25,6 +25,11 @@ h1 {
   margin-bottom: 50px;
 }
 
+.highlight {
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
 .ui.stackable.grid {
   padding: 0 15% 0 15%;
 }
@@ -34,5 +39,5 @@ h1 {
 }
 
 p {
-  text-indent: 25px;
+  /* text-indent: 25px; */
 }
