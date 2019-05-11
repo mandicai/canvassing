@@ -20,26 +20,45 @@
     <p>
       Our perception of time changes as we age. When we're younger and experiencing the pieces of the world
       entirely as new stimuli, we perceive time as passing slower because everything requires adjustment. But
-      when we age and settle into a routine, an alignment of tasks that we are familiar with to the point
-      of autocompleting them, time passes a lot more quickly.
+      when we age and settle into a routine — an alignment of tasks that we are familiar with to the point
+      of autocompleting them — time passes a lot more quickly.
     </p>
   </div>
   <div class="ui two column centered grid stackable">
-    <div class="ten wide column">
-      <p>
-        This grid represents the average US life expectancy - 80 years, according to the
-        <a href="https://www.cdc.gov/nchs/fastats/life-expectancy.htm">CDC</a> in 2016, which boasts
-        a lengthy 78.6 years. Each square represents a week, and each row represents one year.
-      </p>
-      <p>
-        It doesn't seem like much. But let's take a look at the life spans from previous centuries.
-      </p>
-    </div>
-    <div class="six wide column">
+    <div class="seven wide column">
       <div id="container"></div>
       <button id="original">Original</button>
       <button id="move">Move</button>
     </div>
+    <div class="nine wide column">
+      <p>
+        This grid represents the average US life expectancy - <b>80 years</b>, according to the
+        <a href="https://www.cdc.gov/nchs/fastats/life-expectancy.htm">CDC</a> in 2016, which boasts
+        a lengthy 78.6 years.
+      </p>
+      <div class="highlight">
+        <h2>
+          Each square represents a week, and each row represents one year.
+
+          <div id="week-year-vis"></div>
+        </h2>
+      </div>
+      <p>
+        It doesn't seem like much. But let's take a look at some life spans from previous centuries, in comparison
+        to the 80 years we've come to expect. We'll start with some figures from the 1600's.
+      </p>
+    </div>
+  </div>
+  <div class="content">
+    <h2>How long were you expected to live in the 1600's?</h2>
+    <p>
+      Let's start with a couple familiar figures. What about Pocahontas?
+    </p>
+    <div id="pocahontas"></div>
+    <p>
+      And Sir Isaac Newton?
+    </p>
+    <div id="sir-isaac-newton"></div>
   </div>
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"
     integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
@@ -50,3 +69,8 @@
 </body>
 
 </html>
+
+<!-- Visual stories like <a href="https://maximiliankiener.com/digitalprojects/time/">this one</a>
+by Maximilian Kiener and <a href="https://waitbutwhy.com/2015/12/the-tail-end.html">The Tail End</a> by Tim Urban
+illustrate
+a human life span, and remind us of a -->
