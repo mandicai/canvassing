@@ -4,91 +4,91 @@
 // set up variables
 let data = []
 
-let width = 250,
-  height = 400
+let width = 350,
+  height = 405
 
 let groupSpacing = 4,
   cellSpacing = 2,
   offsetTop = height / 5,
   cellSize = 3
 
-// create the initial set of data points
-// 4160 = 80 * 52 (the average US lifespan in weeks)
-d3.range(4160).forEach((el, index) => {
-  let x1 = Math.floor(index % 10)
-  let y0 = Math.floor(index / 52) * (cellSize + cellSpacing), y1 = Math.floor(index % 100 / 10)
-  let x0 = ((cellSize + cellSpacing) * index) - (52 * (cellSize + cellSpacing) * (y0 / (cellSize + cellSpacing)))
+// week year vis
+let weekYearVisHeight = 35,
+  weekYearVisCellSize = 4.5,
+  weekYearVisCellSpacing = 1,
+  weekYearVis = d3.select('#week-year-vis').append('svg').attr('viewBox', `0 0 300 ${weekYearVisHeight}`)
 
-  data.push({
-    value: el,
-    x: x0,
-    y: y0,
-    sourceX: x0,
-    sourceY: y0,
-    targetX: x0,
-    targetY: y0,
-    lifeSpan: 1872
-   })
-})
-
-// set up the canvas by attaching it to the div container
-let canvas = d3.select('#container')
-  .append('canvas')
-  .attr('width', width)
-  .attr('height', height)
-
-// add the tools that canvas needs to draw shapes!
-let context = canvas.node().getContext('2d')
-
-// equivalent to defining an svg element in d3
-let customBase = document.createElement('custom')
-let custom = d3.select(customBase)
+for (i = 0; i < 52; i ++) {
+  weekYearVis.append('rect')
+    .attr('x', () => i * (weekYearVisCellSize + weekYearVisCellSpacing))
+    .attr('y', weekYearVisHeight / 2)
+    .attr('width', weekYearVisCellSize)
+    .attr('height', weekYearVisCellSize)
+    .attr('fill', () => {
+      if (i < 1) return 'green'
+      if (i >= 1 && i < 52) return '#EF06BD'
+      else return '#E0E0E0'
+    })
+}
 
 // initial call to functions to bind data and draw rectangle elements
-update()
+update(createData(0, 'original'), '#container')
 
-d3.select('#move').on('click', function(d) {
-  data.forEach((datum, index) => {
-    let x0 = Math.floor(index / 100) % 10, x1 = Math.floor(index % 10)
-    let y0 = Math.floor(index / 1000), y1 = Math.floor(index % 100 / 10)
+// pocahontas
+update(createData(1040, 'life-span'), '#pocahontas')
 
-    datum.sourceX = datum.x
-    datum.sourceY = datum.y
-    datum.targetX = groupSpacing * x0 + (cellSpacing + cellSize) * (x1 + x0 * 20)
-    datum.targetY = groupSpacing * y0 + (cellSpacing + cellSize) * (y1 + y0 * 20)
-    datum.x = groupSpacing * x0 + (cellSpacing + cellSize) * (x1 + x0 * 20)
-    datum.y = groupSpacing * y0 + (cellSpacing + cellSize) * (y1 + y0 * 20)
+// sir isaac newton
+update(createData(4368, 'life-span'), '#sir-isaac-newton')
+
+function createData(lifeSpan, type) {
+  let data = []
+
+  // create the initial set of data points
+  // 4160 = 80 * 52 (the average US lifespan in weeks)
+  d3.range(4160).forEach((el, index) => {
+    let x1 = Math.floor(index % 10)
+    let y0 = Math.floor(index / 52) * (cellSize + cellSpacing), y1 = Math.floor(index % 100 / 10)
+    let x0 = ((cellSize + cellSpacing) * index) - (52 * (cellSize + cellSpacing) * (y0 / (cellSize + cellSpacing)))
+
+    data.push({
+      value: el,
+      x: x0,
+      y: y0,
+      sourceX: x0,
+      sourceY: y0,
+      targetX: x0,
+      targetY: y0,
+      lifeSpan: lifeSpan,
+      type: type
+    })
   })
 
-  update()
-})
+  return data
+}
 
-d3.select('#original').on('click', function (d) {
-  data.forEach((datum, index) => {
-    let x0 = Math.floor(index / 100) % 10, x1 = Math.floor(index % 10)
-    let y0 = Math.floor(index / 1000), y1 = Math.floor(index % 100 / 10)
+function update(data, container) {
+  // set up the canvas by attaching it to the div container
+  let canvas = d3.select(container)
+    .append('canvas')
+    .attr('width', width)
+    .attr('height', height)
 
-    datum.sourceX = datum.x
-    datum.sourceY = datum.y
-    datum.targetX = groupSpacing * x0 + (cellSpacing + cellSize) * (x1 + x0 * 10)
-    datum.targetY = groupSpacing * y0 + (cellSpacing + cellSize) * (y1 + y0 * 10)
-    datum.x = groupSpacing * x0 + (cellSpacing + cellSize) * (x1 + x0 * 10)
-    datum.y = groupSpacing * y0 + (cellSpacing + cellSize) * (y1 + y0 * 10)
-  })
+  // add the tools that canvas needs to draw shapes!
+  let context = canvas.node().getContext('2d')
 
-  update()
-})
+  // equivalent to defining an svg element in d3
+  let customBase = document.createElement('custom')
+  let custom = d3.select(customBase)
 
-function update() {
-  databind(data) // bind the data
+  databind(data, custom) // bind the data
 
   let timer = d3.timer(elapsed => { // using d3.timer allows transitions to be shown
-    draw() // draw onto the canvas context using d3.timer
+    draw(custom, context) // draw onto the canvas context using d3.timer
     if (elapsed > 1000) { timer.stop() }
   })
 }
 
-function databind(data) {
+function databind(data, custom) {
   // let colourScale = d3.scaleSequential(d3.interpolateBrBG)
   //   .domain(d3.extent(data, d => d.value))
 
@@ -109,7 +109,18 @@ function databind(data) {
     .attr('width', 0)
     .attr('height', 0)
     .attr('fillStyle', (d, i) => {
-      return '#E0E0E0'
+      // original
+      if (d.type === 'original') {
+        if (i < 1) return 'green'
+        if (i >= 1 && i < 52 ) return '#EF06BD'
+        else return '#E0E0E0'
+      }
+
+      // life spans
+      if (d.type === 'life-span') {
+        if (i < d.lifeSpan) return '#EF06BD'
+        else return '#E0E0E0'
+      }
 
       // quarterly
       // if (i % 13 === 0) return '#EF06BD'
@@ -117,9 +128,6 @@ function databind(data) {
 
       // bi-yearly
       // if (i % 26 === 0) return '#EF06BD'
-      // else return '#E0E0E0'
-
-      // if (i < d.lifeSpan) return '#EF06BD'
       // else return '#E0E0E0'
 
       // return colourScale(i)
@@ -155,7 +163,7 @@ function databind(data) {
     .remove()
 }
 
-function draw() {
+function draw(custom, context) {
   // clears the previous canvas
   context.clearRect(0, 0, width, height)
 
@@ -168,4 +176,52 @@ function draw() {
     context.fillStyle = node.attr('fillStyle')
     context.fillRect(node.attr('x'), node.attr('y'), node.attr('width'), node.attr('height'))
   })
+
+  // life span annotation
+  context.fillStyle = 'black'
+  context.beginPath()
+  context.moveTo(265, 2)
+  context.quadraticCurveTo(285, 2, 285, 50)
+  context.lineTo(285, 350)
+  context.quadraticCurveTo(285, 400, 265, 398)
+  context.lineWidth = 1.5
+  context.stroke()
+  // text
+  context.font = 'bold 12px Allerta Stencil'
+  context.fillText('80 years', 295, 200)
+
+  // day annotation
+  // year annotation
 }
+
+// d3.select('#move').on('click', function (d) {
+//   data.forEach((datum, index) => {
+//     let x0 = Math.floor(index / 100) % 10, x1 = Math.floor(index % 10)
+//     let y0 = Math.floor(index / 1000), y1 = Math.floor(index % 100 / 10)
+
+//     datum.sourceX = datum.x
+//     datum.sourceY = datum.y
+//     datum.targetX = groupSpacing * x0 + (cellSpacing + cellSize) * (x1 + x0 * 20)
+//     datum.targetY = groupSpacing * y0 + (cellSpacing + cellSize) * (y1 + y0 * 20)
+//     datum.x = groupSpacing * x0 + (cellSpacing + cellSize) * (x1 + x0 * 20)
+//     datum.y = groupSpacing * y0 + (cellSpacing + cellSize) * (y1 + y0 * 20)
+//   })
+
+//   update(data)
+// })
+
+// d3.select('#original').on('click', function (d) {
+//   data.forEach((datum, index) => {
+//     let x0 = Math.floor(index / 100) % 10, x1 = Math.floor(index % 10)
+//     let y0 = Math.floor(index / 1000), y1 = Math.floor(index % 100 / 10)
+
+//     datum.sourceX = datum.x
+//     datum.sourceY = datum.y
+//     datum.targetX = groupSpacing * x0 + (cellSpacing + cellSize) * (x1 + x0 * 10)
+//     datum.targetY = groupSpacing * y0 + (cellSpacing + cellSize) * (y1 + y0 * 10)
+//     datum.x = groupSpacing * x0 + (cellSpacing + cellSize) * (x1 + x0 * 10)
+//     datum.y = groupSpacing * y0 + (cellSpacing + cellSize) * (y1 + y0 * 10)
+//   })
+
+//   update(data)
+// })
