@@ -2,10 +2,10 @@
 // to create viz with canvas, two steps are required: 1) bind the data 2) draw the viz
 
 // set up variables
-let data = []
-
 let width = 350,
-  height = 405
+  height = 450
+
+let averageUSLifeSpan = 80
 
 let groupSpacing = 4,
   cellSpacing = 2,
@@ -32,22 +32,34 @@ for (i = 0; i < 52; i ++) {
 }
 
 // initial call to functions to bind data and draw rectangle elements
-update(createData(0, 'original'), '#container')
+update(createData(averageUSLifeSpan), '#container', { name: '', years: 0 }, 'diagram')
 
-// pocahontas
-update(createData(1040, 'life-span'), '#pocahontas')
+// // pocahontas
+update(createData(averageUSLifeSpan), '#pocahontas', { name: 'Pocahontas', years: 20 }, 'life-span')
 
-// sir isaac newton
-update(createData(4368, 'life-span'), '#sir-isaac-newton')
+// // sir isaac newton
+update(createData(84), '#sir-isaac-newton', { name: 'Sir Isaac Newton', years: 84 }, 'life-span')
 
-function createData(lifeSpan, type) {
+// multiple
+width = 2400
+height = 300
+cellSize = 1
+cellSpacing = 1
+update(createDataMultiple(averageUSLifeSpan, 5), '#sixteen-hundreds', [
+  { name: 'Pocahontas', years: 20 },
+  { name: 'Sir Isaac Newton', years: 84 },
+  { name: 'Anne, Queen of Great Britain', years: 49 },
+  { name: 'Elizabeth Báthory', years: 54 },
+  { name: 'Rembrandt', years: 63 }
+], 'life-span')
+
+function createData(years) {
   let data = []
 
   // create the initial set of data points
   // 4160 = 80 * 52 (the average US lifespan in weeks)
-  d3.range(4160).forEach((el, index) => {
-    let x1 = Math.floor(index % 10)
-    let y0 = Math.floor(index / 52) * (cellSize + cellSpacing), y1 = Math.floor(index % 100 / 10)
+  d3.range(years * 52).forEach((el, index) => {
+    let y0 = Math.floor(index / 52) * (cellSize + cellSpacing)
     let x0 = ((cellSize + cellSpacing) * index) - (52 * (cellSize + cellSpacing) * (y0 / (cellSize + cellSpacing)))
 
     data.push({
@@ -57,16 +69,36 @@ function createData(lifeSpan, type) {
       sourceX: x0,
       sourceY: y0,
       targetX: x0,
-      targetY: y0,
-      lifeSpan: lifeSpan,
-      type: type
+      targetY: y0
     })
   })
 
   return data
 }
 
-function update(data, container) {
+function createDataMultiple(years, lifeSpanCount) {
+  let data = [],
+    lifeSpanSpacing = 125
+
+  d3.range(years * 52 * lifeSpanCount).forEach((el, index) => {
+    let y0 = Math.floor(index / 52) * (cellSize + cellSpacing)
+    let x0 = ((cellSize + cellSpacing) * index) - (52 * (cellSize + cellSpacing) * (y0 / (cellSize + cellSpacing))) + (Math.floor(index / (averageUSLifeSpan * 52)) * lifeSpanSpacing)
+
+    data.push({
+      value: el,
+      x: x0,
+      y: y0,
+      sourceX: x0,
+      sourceY: y0 - (Math.floor(index / (averageUSLifeSpan * 52)) * 160),
+      targetX: x0,
+      targetY: y0 - (Math.floor(index / (averageUSLifeSpan * 52)) * 160)
+    })
+  })
+
+  return data
+}
+
+function update(data, container, lifeSpan, type) {
   // set up the canvas by attaching it to the div container
   let canvas = d3.select(container)
     .append('canvas')
@@ -80,15 +112,15 @@ function update(data, container) {
   let customBase = document.createElement('custom')
   let custom = d3.select(customBase)
 
-  databind(data, custom) // bind the data
+  databind(data, custom, lifeSpan, type) // bind the data
 
   let timer = d3.timer(elapsed => { // using d3.timer allows transitions to be shown
-    draw(custom, context) // draw onto the canvas context using d3.timer
+    draw(custom, context, lifeSpan, type) // draw onto the canvas context using d3.timer
     if (elapsed > 1000) { timer.stop() }
   })
 }
 
-function databind(data, custom) {
+function databind(data, custom, lifeSpan, type) {
   // let colourScale = d3.scaleSequential(d3.interpolateBrBG)
   //   .domain(d3.extent(data, d => d.value))
 
@@ -110,16 +142,26 @@ function databind(data, custom) {
     .attr('height', 0)
     .attr('fillStyle', (d, i) => {
       // original
-      if (d.type === 'original') {
+      if (type === 'diagram') {
         if (i < 1) return 'green'
         if (i >= 1 && i < 52 ) return '#EF06BD'
         else return '#E0E0E0'
       }
 
       // life spans
-      if (d.type === 'life-span') {
-        if (i < d.lifeSpan) return '#EF06BD'
-        else return '#E0E0E0'
+      if (type === 'life-span') {
+        if (lifeSpan.length) {
+          if (i > (0 * averageUSLifeSpan * 52) && i < ((0 * averageUSLifeSpan * 52) + (lifeSpan[0].years * 52))) return '#EF06BD'
+          if (i > (1 * averageUSLifeSpan * 52) && i < ((1 * averageUSLifeSpan * 52) + (lifeSpan[1].years * 52))) return '#EF06BD'
+          if (i > (2 * averageUSLifeSpan * 52) && i < ((2 * averageUSLifeSpan * 52) + (lifeSpan[2].years * 52))) return '#EF06BD'
+          if (i > (3 * averageUSLifeSpan * 52) && i < ((3 * averageUSLifeSpan * 52) + (lifeSpan[3].years * 52))) return '#EF06BD'
+          if (i > (4 * averageUSLifeSpan * 52) && i < ((4 * averageUSLifeSpan * 52) + (lifeSpan[4].years * 52))) return '#EF06BD'
+          else return '#E0E0E0'
+        } else {
+          if (i < lifeSpan.years * 52 && i < averageUSLifeSpan * 52) return '#EF06BD'
+          if (i < lifeSpan.years * 52 && i >= averageUSLifeSpan * 52) return 'blue'
+          else return '#E0E0E0'
+        }
       }
 
       // quarterly
@@ -163,7 +205,7 @@ function databind(data, custom) {
     .remove()
 }
 
-function draw(custom, context) {
+function draw(custom, context, lifeSpan, type) {
   // clears the previous canvas
   context.clearRect(0, 0, width, height)
 
@@ -177,21 +219,23 @@ function draw(custom, context) {
     context.fillRect(node.attr('x'), node.attr('y'), node.attr('width'), node.attr('height'))
   })
 
-  // life span annotation
-  context.fillStyle = 'black'
-  context.beginPath()
-  context.moveTo(265, 2)
-  context.quadraticCurveTo(285, 2, 285, 50)
-  context.lineTo(285, 350)
-  context.quadraticCurveTo(285, 400, 265, 398)
-  context.lineWidth = 1.5
-  context.stroke()
-  // text
-  context.font = 'bold 12px Allerta Stencil'
-  context.fillText('80 years', 295, 200)
+  if (type === 'diagram') {
+    // life span annotation
+    context.fillStyle = 'black'
+    context.beginPath()
+    context.moveTo(265, 2)
+    context.quadraticCurveTo(285, 2, 285, 50)
+    context.lineTo(285, 350)
+    context.quadraticCurveTo(285, 400, 265, 398)
+    context.lineWidth = 1.5
+    context.stroke()
+    // text
+    context.font = 'bold 12px Allerta Stencil'
+    context.fillText('80 years', 295, 200)
+  }
 
-  // day annotation
-  // year annotation
+  if (type === 'life-span') {
+  }
 }
 
 // d3.select('#move').on('click', function (d) {
