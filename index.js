@@ -3,36 +3,19 @@
 
 // set up variables
 let width = 350,
-  height = 450
+  height = 400
 
 let averageUSLifeSpan = 80
 
 let groupSpacing = 4,
-  cellSpacing = 2,
+  cellSpacing = 1.5,
   offsetTop = height / 5,
   cellSize = 3
 
-// week year vis
-let weekYearVisHeight = 35,
-  weekYearVisCellSize = 4.5,
-  weekYearVisCellSpacing = 1,
-  weekYearVis = d3.select('#week-year-vis').append('svg').attr('viewBox', `0 0 300 ${weekYearVisHeight}`)
-
-for (i = 0; i < 52; i ++) {
-  weekYearVis.append('rect')
-    .attr('x', () => i * (weekYearVisCellSize + weekYearVisCellSpacing))
-    .attr('y', weekYearVisHeight / 2)
-    .attr('width', weekYearVisCellSize)
-    .attr('height', weekYearVisCellSize)
-    .attr('fill', () => {
-      if (i < 1) return 'green'
-      if (i >= 1 && i < 52) return '#EF06BD'
-      else return '#E0E0E0'
-    })
-}
+let diagramYTranslate = 40
 
 // initial call to functions to bind data and draw rectangle elements
-update(createData(averageUSLifeSpan), '#container', { name: '', years: 0 }, 'diagram')
+update(createData(averageUSLifeSpan), '#canvas-container', { name: '', years: 0 }, 'diagram')
 
 // // pocahontas
 update(createData(averageUSLifeSpan), '#pocahontas', { name: 'Pocahontas', years: 20 }, 'life-span')
@@ -102,7 +85,6 @@ function update(data, container, lifeSpan, type) {
   // set up the canvas by attaching it to the div container
   let canvas = d3.select(container)
     .append('canvas')
-    .attr('width', width)
     .attr('height', height)
 
   // add the tools that canvas needs to draw shapes!
@@ -136,26 +118,27 @@ function databind(data, custom, lifeSpan, type) {
       return d.sourceX
     })
     .attr('y', (d, i) => {
-      return d.sourceY
+      if (type === 'diagram') return d.sourceY + diagramYTranslate
+      if (type === 'life-span') return d.sourceY
     })
     .attr('width', 0)
     .attr('height', 0)
     .attr('fillStyle', (d, i) => {
       // original
       if (type === 'diagram') {
-        if (i < 1) return 'green'
-        if (i >= 1 && i < 52 ) return '#EF06BD'
+        if (i === 546) return '#0049FF'
+        if (i >= 0 && i < 52 ) return '#EF06BD'
         else return '#E0E0E0'
       }
 
       // life spans
       if (type === 'life-span') {
         if (lifeSpan.length) {
-          if (i > (0 * averageUSLifeSpan * 52) && i < ((0 * averageUSLifeSpan * 52) + (lifeSpan[0].years * 52))) return '#EF06BD'
-          if (i > (1 * averageUSLifeSpan * 52) && i < ((1 * averageUSLifeSpan * 52) + (lifeSpan[1].years * 52))) return '#EF06BD'
-          if (i > (2 * averageUSLifeSpan * 52) && i < ((2 * averageUSLifeSpan * 52) + (lifeSpan[2].years * 52))) return '#EF06BD'
-          if (i > (3 * averageUSLifeSpan * 52) && i < ((3 * averageUSLifeSpan * 52) + (lifeSpan[3].years * 52))) return '#EF06BD'
-          if (i > (4 * averageUSLifeSpan * 52) && i < ((4 * averageUSLifeSpan * 52) + (lifeSpan[4].years * 52))) return '#EF06BD'
+          if (i >= (0 * averageUSLifeSpan * 52) && i < ((0 * averageUSLifeSpan * 52) + (lifeSpan[0].years * 52))) return '#EF06BD'
+          if (i >= (1 * averageUSLifeSpan * 52) && i < ((1 * averageUSLifeSpan * 52) + (lifeSpan[1].years * 52))) return '#EF06BD'
+          if (i >= (2 * averageUSLifeSpan * 52) && i < ((2 * averageUSLifeSpan * 52) + (lifeSpan[2].years * 52))) return '#EF06BD'
+          if (i >= (3 * averageUSLifeSpan * 52) && i < ((3 * averageUSLifeSpan * 52) + (lifeSpan[3].years * 52))) return '#EF06BD'
+          if (i >= (4 * averageUSLifeSpan * 52) && i < ((4 * averageUSLifeSpan * 52) + (lifeSpan[4].years * 52))) return '#EF06BD'
           else return '#E0E0E0'
         } else {
           if (i < lifeSpan.years * 52 && i < averageUSLifeSpan * 52) return '#EF06BD'
@@ -181,7 +164,8 @@ function databind(data, custom, lifeSpan, type) {
       return d.sourceX
     })
     .attr('y', (d, i) => {
-      return d.sourceY
+      if (type === 'diagram') return d.sourceY + diagramYTranslate
+      if (type === 'life-span') return d.sourceY
     })
     .transition()
     .duration(1000)
@@ -189,7 +173,8 @@ function databind(data, custom, lifeSpan, type) {
       return d.targetX
     })
     .attr('y', (d, i) => {
-      return d.targetY
+      if (type === 'diagram') return d.targetY + diagramYTranslate
+      if (type === 'life-span') return d.targetY
     })
     .attr('width', cellSize)
     .attr('height', cellSize)
@@ -222,22 +207,65 @@ function draw(custom, context, lifeSpan, type) {
   if (type === 'diagram') {
     // life span annotation
     context.fillStyle = 'black'
+    // beginPath begins an entirely new path, rather than creating a subpath like moveTo
     context.beginPath()
-    context.moveTo(265, 2)
-    context.quadraticCurveTo(285, 2, 285, 50)
-    context.lineTo(285, 350)
-    context.quadraticCurveTo(285, 400, 265, 398)
-    context.lineWidth = 1.5
+    context.moveTo(235, 41)
+    context.quadraticCurveTo(250, 41, 250, 98)
+    context.lineTo(250, 350)
+    context.quadraticCurveTo(250, 400, 235, 398)
+    context.lineWidth = 1.25
     context.stroke()
     // text
-    context.font = 'bold 12px Allerta Stencil'
-    context.fillText('80 years', 295, 200)
+    context.font = 'bold 9px Allerta Stencil'
+    context.fillText('80 years', 260, 200)
+
+    // year annotation
+    context.beginPath()
+    context.moveTo(1, 38)
+    context.quadraticCurveTo(0, 25, 25, 25)
+    context.lineTo(210, 25)
+    context.quadraticCurveTo(230, 25, 232, 38)
+    context.lineWidth = 1.25
+    context.stroke()
+    //text
+    context.font = 'bold 9px Allerta Stencil'
+    context.fillText('1 year', 100, 15)
+
+    // week annotation
+    context.beginPath()
+    context.moveTo(116, 83)
+    context.quadraticCurveTo(99.5, 70, 80, 85)
+    // context.lineTo(85, 96.5)
+    context.lineWidth = 1.25
+    context.stroke()
+    //text
+    context.font = 'bold 9px Allerta Stencil'
+    context.fillText('1 week', 46, 95)
   }
 
   if (type === 'life-span') {
   }
 }
 
+// week year vis
+// let weekYearVisHeight = 35,
+//   weekYearVisCellSize = 4.5,
+//   weekYearVisCellSpacing = 1,
+//   weekYearVis = d3.select('#week-year-vis').append('svg').attr('viewBox', `0 0 300 ${weekYearVisHeight}`)
+
+// for (i = 0; i < 52; i++) {
+//   weekYearVis.append('rect')
+//     .attr('x', () => i * (weekYearVisCellSize + weekYearVisCellSpacing))
+//     .attr('y', weekYearVisHeight / 2)
+//     .attr('width', weekYearVisCellSize)
+//     .attr('height', weekYearVisCellSize)
+//     .attr('fill', () => {
+//       if (i < 1) return '#0049FF'
+//       if (i >= 1 && i < 52) return '#EF06BD'
+//       else return '#E0E0E0'
+//     })
+// }
+//
 // d3.select('#move').on('click', function (d) {
 //   data.forEach((datum, index) => {
 //     let x0 = Math.floor(index / 100) % 10, x1 = Math.floor(index % 10)
