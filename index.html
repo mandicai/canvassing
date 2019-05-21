@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>A Canvas Exploration</title>
+  <title>Putting Time into Perspective</title>
   <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Allerta+Stencil" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
@@ -25,22 +25,16 @@
     </p>
   </div>
   <div class="ui two column centered grid stackable">
-    <div class="seven wide column">
-      <div id="container"></div>
-      <button id="original">Original</button>
-      <button id="move">Move</button>
-    </div>
     <div class="nine wide column">
       <p>
-        This grid represents the average US life expectancy - <b>80 years</b>, according to the
+        The grid represents the average US life expectancy - <b>80 years</b>, according to the
         <a href="https://www.cdc.gov/nchs/fastats/life-expectancy.htm">CDC</a> in 2016, which boasts
         a lengthy 78.6 years.
       </p>
       <div class="highlight">
         <h2>
-          Each square represents a week, and each row represents one year.
-
-          <div id="week-year-vis"></div>
+          Each square represents <span class="week-highlight">1 week</span>, and each row represents <span class="year-highlight">1 year</span>.
+          <!-- <div id="week-year-vis"></div> -->
         </h2>
       </div>
       <p>
@@ -48,32 +42,32 @@
         to the 80 years we've come to expect. We'll start with some figures from the 1600's.
       </p>
     </div>
+    <div class="seven wide column">
+      <div id="diagram"></div>
+      <!-- <button id="original">Original</button>
+      <button id="move">Move</button> -->
+    </div>
   </div>
+  <div class="ui divider"></div>
   <div class="content">
     <h2>How long were you expected to live in the 1600's?</h2>
-    <p>
-      Let's start with a couple familiar figures. What about Pocahontas?
-    </p>
   </div>
   <div class="ui two column centered grid stackable">
-    <div class="eight wide column">
+    <div class="six wide column">
       <div id="pocahontas"></div>
     </div>
-    <div class="eight wide column">
-      Pocahontas lived to be 20-21 years old.
+    <div class="ten wide column">
+      <p>Let's start with a couple familiar figures. What about Pocahontas?</p>
+      <p>Pocahontas lived to be <b>20-21</b> years old.</p>
     </div>
-  </div>
-  <div class="content">
-    <p>
-      But in comparison to Sir Isaac Newton ...
-    </p>
   </div>
   <div class="ui two column centered grid stackable">
-    <div class="eight wide column">
+    <div class="six wide column">
       <div id="sir-isaac-newton"></div>
     </div>
-    <div class="eight wide column">
-      Sir Isaac Newton lived to be 84 years ago, surpassing the average US life span.
+    <div class="ten wide column">
+      <p>But in comparison to Sir Isaac Newton ...</p>
+      <p>Sir Isaac Newton lived to be <b>84</b> years ago, surpassing the average US life span.</p>
     </div>
   </div>
   <div class="content">
