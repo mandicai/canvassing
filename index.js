@@ -15,7 +15,7 @@ let groupSpacing = 4,
 let diagramYTranslate = 40
 
 // initial call to functions to bind data and draw rectangle elements
-update(createData(averageUSLifeSpan), '#canvas-container', { name: '', years: 0 }, 'diagram')
+update(createData(averageUSLifeSpan), '#diagram', { name: '', years: 0 }, 'diagram')
 
 // // pocahontas
 update(createData(averageUSLifeSpan), '#pocahontas', { name: 'Pocahontas', years: 20 }, 'life-span')
