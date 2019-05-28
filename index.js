@@ -23,7 +23,7 @@ update(createData(averageUSLifeSpan), '#pocahontas', { name: 'Pocahontas', years
 // // sir isaac newton
 update(createData(84), '#sir-isaac-newton', { name: 'Sir Isaac Newton', years: 84 }, 'single-life-span')
 
-// 1600's
+// 17th century
 update(createData(averageUSLifeSpan), '#sixteen-hundreds-pocahontas', { name: 'Pocahontas', years: 20 }, 'multiple-life-span')
 update(createData(84), '#sixteen-hundreds-newton', { name: 'Sir Isaac Newton', years: 84 }, 'multiple-life-span')
 update(createData(83), '#sixteen-hundreds-voltaire', { name: 'Voltaire', years: 83 }, 'multiple-life-span')
@@ -122,9 +122,9 @@ function databind(data, custom, lifeSpan, type) {
     .attr('fillStyle', (d, i) => {
       // original
       if (type === 'diagram') {
-        if (i === 546) return '#0049FF'
+        if (i === 546) return '#000'
         if (i >= 0 && i < 52 ) return '#EF06BD'
-        else return '#c7c6c5'
+        else return '#C7C6C5'
       }
 
       // life spans
@@ -135,21 +135,21 @@ function databind(data, custom, lifeSpan, type) {
           if (i >= (2 * averageUSLifeSpan * 52) && i < ((2 * averageUSLifeSpan * 52) + (lifeSpan[2].years * 52))) return '#EF06BD'
           if (i >= (3 * averageUSLifeSpan * 52) && i < ((3 * averageUSLifeSpan * 52) + (lifeSpan[3].years * 52))) return '#EF06BD'
           if (i >= (4 * averageUSLifeSpan * 52) && i < ((4 * averageUSLifeSpan * 52) + (lifeSpan[4].years * 52))) return '#EF06BD'
-          else return '#c7c6c5'
+          else return '#C7C6C5'
         } else {
           if (i < lifeSpan.years * 52 && i < averageUSLifeSpan * 52) return '#EF06BD'
-          if (i < lifeSpan.years * 52 && i >= averageUSLifeSpan * 52) return 'blue'
-          else return '#c7c6c5'
+          if (i < lifeSpan.years * 52 && i >= averageUSLifeSpan * 52) return '#4C6Dfe'
+          else return '#C7C6C5'
         }
       }
 
       // quarterly
       // if (i % 13 === 0) return '#EF06BD'
-      // else return '#c7c6c5'
+      // else return '#C7C6C5'
 
       // bi-yearly
       // if (i % 26 === 0) return '#EF06BD'
-      // else return '#c7c6c5'
+      // else return '#C7C6C5'
 
       // return colourScale(i)
     })
@@ -272,9 +272,9 @@ function draw(custom, context, lifeSpan, type) {
 //     .attr('width', weekYearVisCellSize)
 //     .attr('height', weekYearVisCellSize)
 //     .attr('fill', () => {
-//       if (i < 1) return '#0049FF'
+//       if (i < 1) return '#000'
 //       if (i >= 1 && i < 52) return '#EF06BD'
-//       else return '#c7c6c5'
+//       else return '#C7C6C5'
 //     })
 // }
 //
