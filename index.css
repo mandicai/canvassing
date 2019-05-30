@@ -42,13 +42,11 @@ a:hover {
 }
 
 .week-highlight {
-  color: #000;
-  text-decoration: underline;
+  color: #EF06BD;
 }
 
 .year-highlight {
   color: #EF06BD;
-  text-decoration: underline;
 }
 
 .ui.stackable.grid {
@@ -67,6 +65,12 @@ canvas {
   font-family: 'Allerta Stencil', monospace;
   font-weight: regular;
   color: #4C6DFE;
+}
+
+.green-row {
+  font-family: 'Allerta Stencil', monospace;
+  font-weight: regular;
+  color: #00C412;
 }
 
 .name {
