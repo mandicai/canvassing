@@ -30,47 +30,68 @@ a:hover {
   padding-top: 15px;
 }
 
-.content {
+.section {
   padding: 0 15% 0 15%;
-  margin-top: 50px;
-  margin-bottom: 50px;
+  padding-top: 35px;
+  padding-bottom: 35px;
 }
 
 .highlight {
-  margin-top: 50px;
-  margin-bottom: 50px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  font-family: 'Allerta Stencil', monospace;
+  font-weight: regular;
+  font-size: 15px;
 }
 
 .week-highlight {
-  color: #EF06BD;
+  color: #F98AB7;
 }
 
 .year-highlight {
-  color: #EF06BD;
+  color: #F98AB7;
+}
+
+.definitions {
+  background-color: #F4F4F4;
 }
 
 .ui.stackable.grid {
   padding: 0 15% 0 15%;
-}
-
-.ui.divider {
-  margin-top: 50px;
+  padding-top: 25px;
+  padding-bottom: 25px;
 }
 
 canvas {
   width: 125%;
 }
 
-.blue-rows {
-  font-family: 'Allerta Stencil', monospace;
-  font-weight: regular;
-  color: #4C6DFE;
+.diagram {
+  padding-top: 0 !important;
 }
 
-.green-row {
+.yellow {
   font-family: 'Allerta Stencil', monospace;
   font-weight: regular;
-  color: #00C412;
+  color: #EABF07;
+}
+
+.blue {
+  font-family: 'Allerta Stencil', monospace;
+  font-weight: regular;
+  color: #316CFF;
+}
+
+.purple {
+  font-family: 'Allerta Stencil', monospace;
+  font-weight: regular;
+  color: #32037C;
+}
+
+.pink {
+  font-family: 'Allerta Stencil', monospace;
+  font-weight: regular;
+  color: #F98AB7;
 }
 
 .name {
