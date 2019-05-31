@@ -3,9 +3,9 @@
 
 // set up variables
 let width = 350,
-  height = 385
+  height = 350
 
-let averageUSLifeSpan = 80
+let globalLifeSpan = 72
 
 let groupSpacing = 4,
   cellSpacing = 1.5,
@@ -15,31 +15,39 @@ let groupSpacing = 4,
 let diagramYTranslate = 40
 
 // initial call to functions to bind data and draw rectangle elements
-update(createData(averageUSLifeSpan), '#diagram', { name: '', years: 0, average: 0 }, 'diagram')
+update(createData(globalLifeSpan), '#diagram', { name: '', years: 0, birthExpectancy: 0, adultExpectancy: 59 }, 'diagram')
 
 // average
-update(createData(averageUSLifeSpan), '#seventeeth-century-average', { name: '', years: 0, average: 40 }, 'average-life-span')
+update(createData(globalLifeSpan), '#seventeeth-century-average', { name: '', years: 0, birthExpectancy: 40, adultExpectancy: 59 }, 'average-life-span')
 
 // pocahontas
-update(createData(averageUSLifeSpan), '#pocahontas', { name: 'Pocahontas', years: 20, average: 40 }, 'single-life-span')
+update(createData(globalLifeSpan), '#pocahontas', { name: 'Pocahontas', years: 20, birthExpectancy: 40, adultExpectancy: 59 }, 'single-life-span')
 
 // sir isaac newton
-update(createData(84), '#sir-isaac-newton', { name: 'Sir Isaac Newton', years: 84, average: 40 }, 'single-life-span')
+update(createData(84), '#sir-isaac-newton', { name: 'Sir Isaac Newton', years: 84, birthExpectancy: 40, adultExpectancy: 59 }, 'single-life-span')
 
 // 17th century
-update(createData(averageUSLifeSpan), '#seventeeth-century-pocahontas', { name: 'Pocahontas', years: 20, average: 40 }, 'multiple-life-span')
-update(createData(84), '#seventeeth-century-newton', { name: 'Sir Isaac Newton', years: 84, average: 40 }, 'multiple-life-span')
-update(createData(83), '#seventeeth-century-voltaire', { name: 'Voltaire', years: 83, average: 40 }, 'multiple-life-span')
-update(createData(averageUSLifeSpan), '#seventeeth-century-rembrandt', { name: 'Rembrandt', years: 63, average: 40 }, 'multiple-life-span')
-update(createData(averageUSLifeSpan), '#seventeeth-century-galilei', { name: 'Galileo Galilei', years: 77, average: 40 }, 'multiple-life-span')
-update(createData(averageUSLifeSpan), '#seventeeth-century-bathory', { name: 'Elizabeth Bathory', years: 54, average: 40 }, 'multiple-life-span')
-update(createData(averageUSLifeSpan), '#seventeeth-century-anne', { name: 'Anne, Queen of Great Britain', years: 49, average: 40 }, 'multiple-life-span')
+update(createData(globalLifeSpan), '#seventeeth-century-pocahontas', { name: 'Pocahontas', years: 20, birthExpectancy: 40, adultExpectancy: 59 }, 'multiple-life-span')
+update(createData(84), '#seventeeth-century-newton', { name: 'Sir Isaac Newton', years: 84, birthExpectancy: 40, adultExpectancy: 59 }, 'multiple-life-span')
+update(createData(83), '#seventeeth-century-voltaire', { name: 'Voltaire', years: 83, birthExpectancy: 40, adultExpectancy: 59 }, 'multiple-life-span')
+update(createData(globalLifeSpan), '#seventeeth-century-rembrandt', { name: 'Rembrandt', years: 63, birthExpectancy: 40, adultExpectancy: 59 }, 'multiple-life-span')
+update(createData(77), '#seventeeth-century-galilei', { name: 'Galileo Galilei', years: 77, birthExpectancy: 40, adultExpectancy: 59 }, 'multiple-life-span')
+update(createData(globalLifeSpan), '#seventeeth-century-bathory', { name: 'Elizabeth Bathory', years: 54, birthExpectancy: 40, adultExpectancy: 59 }, 'multiple-life-span')
+update(createData(globalLifeSpan), '#seventeeth-century-anne', { name: 'Anne, Queen of Great Britain', years: 49, birthExpectancy: 40, adultExpectancy: 59 }, 'multiple-life-span')
+
+// 18th century 
+update(createData(86), '#eighteenth-century-sojourner', { name: 'Sojourner Truth', years: 86, birthExpectancy: 40, adultExpectancy: 59 }, 'multiple-life-span')
+update(createData(globalLifeSpan), '#eighteenth-century-jane', { name: 'Jane Austen', years: 41, birthExpectancy: 40, adultExpectancy: 59 }, 'multiple-life-span')
+update(createData(globalLifeSpan), '#eighteenth-century-mary', { name: 'Mary Wollstonecraft', years: 38, birthExpectancy: 40, adultExpectancy: 59 }, 'multiple-life-span')
+update(createData(globalLifeSpan), '#eighteenth-century-mary-shelley', { name: 'Mary Wollstonecraft Shelley', years: 54, birthExpectancy: 40, adultExpectancy: 59 }, 'multiple-life-span')
+update(createData(88), '#eighteenth-century-marie', { name: 'Marie Tussaud', years: 88, birthExpectancy: 40, adultExpectancy: 59 }, 'multiple-life-span')
+update(createData(globalLifeSpan), '#eighteenth-century-carl', { name: 'Carl Linnaeus', years: 70, birthExpectancy: 40, adultExpectancy: 59 }, 'multiple-life-span')
 
 function createData(years) {
   let data = []
 
   // create the initial set of data points
-  // 4160 = 80 * 52 (the average US lifespan in weeks)
+  // 4160 = globalLifeSpan * 52 (the average US lifespan in weeks)
   d3.range(years * 52).forEach((el, index) => {
     let y0 = Math.floor(index / 52) * (cellSize + cellSpacing)
     let x0 = ((cellSize + cellSpacing) * index) - (52 * (cellSize + cellSpacing) * (y0 / (cellSize + cellSpacing)))
@@ -64,16 +72,16 @@ function createDataMultiple(years, lifeSpanCount) {
 
   d3.range(years * 52 * lifeSpanCount).forEach((el, index) => {
     let y0 = Math.floor(index / 52) * (cellSize + cellSpacing)
-    let x0 = ((cellSize + cellSpacing) * index) - (52 * y0) + (Math.floor(index / (averageUSLifeSpan * 52)) * lifeSpanSpacing)
+    let x0 = ((cellSize + cellSpacing) * index) - (52 * y0) + (Math.floor(index / (globalLifeSpan * 52)) * lifeSpanSpacing)
 
     data.push({
       value: el,
       x: x0,
       y: y0,
       sourceX: x0,
-      sourceY: y0 - (Math.floor(index / (averageUSLifeSpan * 52)) * 160),
+      sourceY: y0 - (Math.floor(index / (globalLifeSpan * 52)) * 160),
       targetX: x0,
-      targetY: y0 - (Math.floor(index / (averageUSLifeSpan * 52)) * 160)
+      targetY: y0 - (Math.floor(index / (globalLifeSpan * 52)) * 160)
     })
   })
 
@@ -125,31 +133,33 @@ function databind(data, custom, lifeSpan, type) {
     .attr('fillStyle', (d, i) => {
       // diagram
       if (type === 'diagram') {
-        if (i === 546) return '#EF06BD'
-        if (i >= 0 && i < 52 ) return '#EF06BD'
+        if (i === 546) return '#F98AB7'
+        if (i >= 0 && i < 52 ) return '#F98AB7'
         else return '#C7C6C5'
       }
 
       // life spans
       if (type === 'single-life-span' || type === 'multiple-life-span') {
-        if (i >= lifeSpan.average * 52 && i < lifeSpan.average * 52 + 52) return '#00C412'
-        if (i < lifeSpan.years * 52 && i < averageUSLifeSpan * 52) return '#EF06BD'
-        if (i < lifeSpan.years * 52 && i >= averageUSLifeSpan * 52) return '#4C6DfE'
+        if (i >= lifeSpan.birthExpectancy * 52 && i < lifeSpan.birthExpectancy * 52 + 52) return '#316CFF'
+        if (i >= lifeSpan.adultExpectancy * 52 && i < lifeSpan.adultExpectancy * 52 + 52) return '#32037C'
+        if (i < lifeSpan.years * 52 && i < globalLifeSpan * 52) return '#F98AB7'
+        if (i < lifeSpan.years * 52 && i >= globalLifeSpan * 52) return '#EABF07'
         else return '#C7C6C5'
       }
 
       // average
       if (type === 'average-life-span') {
-        if (i >= lifeSpan.average * 52 && i < lifeSpan.average * 52 + 52) return '#00C412'
+        if (i >= lifeSpan.birthExpectancy * 52 && i < lifeSpan.birthExpectancy * 52 + 52) return '#316CFF'
+        if (i >= lifeSpan.adultExpectancy * 52 && i < lifeSpan.adultExpectancy * 52 + 52) return '#32037C'
         else return '#C7C6C5'
       }
 
       // quarterly
-      // if (i % 13 === 0) return '#EF06BD'
+      // if (i % 13 === 0) return '#F98AB7'
       // else return '#C7C6C5'
 
       // bi-yearly
-      // if (i % 26 === 0) return '#EF06BD'
+      // if (i % 26 === 0) return '#F98AB7'
       // else return '#C7C6C5'
 
       // return colourScale(i)
@@ -208,13 +218,13 @@ function draw(custom, context, lifeSpan, type) {
     context.beginPath()
     context.moveTo(235, 41)
     context.quadraticCurveTo(250, 41, 250, 98)
-    context.lineTo(250, 350)
-    context.quadraticCurveTo(250, 400, 235, 398)
+    context.lineTo(250, height - 50)
+    context.quadraticCurveTo(250, height, 235, height - 2)
     context.lineWidth = 1.25
     context.stroke()
     // text
     context.font = 'bold 9px Allerta Stencil'
-    context.fillText('80 years', 260, 200)
+    context.fillText(`${globalLifeSpan} years`, 260, 200)
 
     // year annotation
     context.beginPath()
@@ -252,7 +262,7 @@ function draw(custom, context, lifeSpan, type) {
 // height = 300
 // cellSize = 1
 // cellSpacing = 1
-// update(createDataMultiple(averageUSLifeSpan, 5), '#seventeeth-century', [
+// update(createDataMultiple(globalLifeSpan, 5), '#seventeeth-century', [
 //   { name: 'Pocahontas', years: 20 },
 //   { name: 'Sir Isaac Newton', years: 84 },
 //   { name: 'Anne, Queen of Great Britain', years: 49 },
@@ -274,7 +284,7 @@ function draw(custom, context, lifeSpan, type) {
 //     .attr('height', weekYearVisCellSize)
 //     .attr('fill', () => {
 //       if (i < 1) return '#000'
-//       if (i >= 1 && i < 52) return '#EF06BD'
+//       if (i >= 1 && i < 52) return '#F98AB7'
 //       else return '#C7C6C5'
 //     })
 // }
