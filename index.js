@@ -15,10 +15,10 @@ let groupSpacing = 4,
 let diagramYTranslate = 40
 
 // initial call to functions to bind data and draw rectangle elements
-update(createData(globalLifeSpan), '#diagram', { name: '', years: 0, birthExpectancy: 0, adultExpectancy: 59 }, 'diagram')
+update(createData(globalLifeSpan), '#current-century-diagram', { name: '', years: 0, birthExpectancy: 0, adultExpectancy: 0 }, 'diagram')
 
-// average
-update(createData(globalLifeSpan), '#seventeeth-century-average', { name: '', years: 0, birthExpectancy: 40, adultExpectancy: 59 }, 'average-life-span')
+// 16th to 18th century
+update(createData(globalLifeSpan), '#earlier-century-average', { name: '', years: 0, birthExpectancy: 40, adultExpectancy: 59 }, 'average-life-span')
 
 // pocahontas
 update(createData(globalLifeSpan), '#pocahontas', { name: 'Pocahontas', years: 20, birthExpectancy: 40, adultExpectancy: 59 }, 'single-life-span')
@@ -42,6 +42,12 @@ update(createData(globalLifeSpan), '#eighteenth-century-mary', { name: 'Mary Wol
 update(createData(globalLifeSpan), '#eighteenth-century-mary-shelley', { name: 'Mary Wollstonecraft Shelley', years: 54, birthExpectancy: 40, adultExpectancy: 59 }, 'multiple-life-span')
 update(createData(88), '#eighteenth-century-marie', { name: 'Marie Tussaud', years: 88, birthExpectancy: 40, adultExpectancy: 59 }, 'multiple-life-span')
 update(createData(globalLifeSpan), '#eighteenth-century-carl', { name: 'Carl Linnaeus', years: 70, birthExpectancy: 40, adultExpectancy: 59 }, 'multiple-life-span')
+
+// 20th century comparisons
+update(createData(globalLifeSpan), '#early-twentieth-century-compare', { name: '', years: 0, birthExpectancy: 31, adultExpectancy: -1 }, 'average-life-span') // -1 means don't show that expectancy on the grid
+update(createData(globalLifeSpan), '#mid-twentieth-century-compare', { name: '', years: 0, birthExpectancy: 48, adultExpectancy: -1 }, 'average-life-span')
+update(createData(globalLifeSpan), '#earlier-century-compare', { name: '', years: 0, birthExpectancy: 40, adultExpectancy: 59 }, 'average-life-span')
+update(createData(globalLifeSpan), '#current-century-compare', { name: '', years: 0, birthExpectancy: 71, adultExpectancy: -1 }, 'average-life-span') // 71 is the 72nd year, because the grid rows start from 0
 
 function createData(years) {
   let data = []
