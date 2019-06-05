@@ -30,18 +30,13 @@ update(createData(84), '#sir-isaac-newton', { name: 'Sir Isaac Newton', years: 8
 update(createData(globalLifeSpan), '#seventeeth-century-pocahontas', { name: 'Pocahontas', years: 20, birthExpectancy: 40, adultExpectancy: 59 }, 'multiple-life-span')
 update(createData(84), '#seventeeth-century-newton', { name: 'Sir Isaac Newton', years: 84, birthExpectancy: 40, adultExpectancy: 59 }, 'multiple-life-span')
 update(createData(83), '#seventeeth-century-voltaire', { name: 'Voltaire', years: 83, birthExpectancy: 40, adultExpectancy: 59 }, 'multiple-life-span')
-update(createData(globalLifeSpan), '#seventeeth-century-rembrandt', { name: 'Rembrandt', years: 63, birthExpectancy: 40, adultExpectancy: 59 }, 'multiple-life-span')
 update(createData(77), '#seventeeth-century-galilei', { name: 'Galileo Galilei', years: 77, birthExpectancy: 40, adultExpectancy: 59 }, 'multiple-life-span')
 update(createData(globalLifeSpan), '#seventeeth-century-bathory', { name: 'Elizabeth Bathory', years: 54, birthExpectancy: 40, adultExpectancy: 59 }, 'multiple-life-span')
-update(createData(globalLifeSpan), '#seventeeth-century-anne', { name: 'Anne, Queen of Great Britain', years: 49, birthExpectancy: 40, adultExpectancy: 59 }, 'multiple-life-span')
 
 // 18th century 
 update(createData(86), '#eighteenth-century-sojourner', { name: 'Sojourner Truth', years: 86, birthExpectancy: 40, adultExpectancy: 59 }, 'multiple-life-span')
 update(createData(globalLifeSpan), '#eighteenth-century-jane', { name: 'Jane Austen', years: 41, birthExpectancy: 40, adultExpectancy: 59 }, 'multiple-life-span')
 update(createData(globalLifeSpan), '#eighteenth-century-mary', { name: 'Mary Wollstonecraft', years: 38, birthExpectancy: 40, adultExpectancy: 59 }, 'multiple-life-span')
-update(createData(globalLifeSpan), '#eighteenth-century-mary-shelley', { name: 'Mary Wollstonecraft Shelley', years: 54, birthExpectancy: 40, adultExpectancy: 59 }, 'multiple-life-span')
-update(createData(88), '#eighteenth-century-marie', { name: 'Marie Tussaud', years: 88, birthExpectancy: 40, adultExpectancy: 59 }, 'multiple-life-span')
-update(createData(globalLifeSpan), '#eighteenth-century-carl', { name: 'Carl Linnaeus', years: 70, birthExpectancy: 40, adultExpectancy: 59 }, 'multiple-life-span')
 
 // 20th century comparisons
 update(createData(globalLifeSpan), '#early-twentieth-century-compare', { name: '', years: 0, birthExpectancy: 31, adultExpectancy: -1 }, 'average-life-span') // -1 means don't show that expectancy on the grid
@@ -57,6 +52,7 @@ update(createData(globalLifeSpan), '#twentieth-century-eva', { name: 'Eva Perón
 update(createData(87), '#twentieth-century-elie', { name: 'Elie Wiesel', years: 87, birthExpectancy: 48, adultExpectancy: -1 }, 'multiple-life-span')
 update(createData(76), '#twentieth-century-stephen', { name: 'Stephen Hawking', years: 76, birthExpectancy: 48, adultExpectancy: -1 }, 'multiple-life-span')
 update(createData(84), '#twentieth-century-salvador', { name: 'Salvador Dalí', years: 84, birthExpectancy: 48, adultExpectancy: -1 }, 'multiple-life-span')
+update(createData(globalLifeSpan), '#twentieth-century-rachel', { name: 'Rachel Carson', years: 56, birthExpectancy: 48, adultExpectancy: -1 }, 'multiple-life-span')
 
 function createData(years) {
   let data = []
@@ -183,15 +179,6 @@ function databind(data, custom, lifeSpan, type) {
   // merge allows enter and update to be combined, reducing lines of code
   join.merge(enterSel)
     .attr('x', (d, i) => {
-      return d.sourceX
-    })
-    .attr('y', (d, i) => {
-      if (type === 'diagram') return d.sourceY + diagramYTranslate
-      if (type === 'single-life-span' || type === 'multiple-life-span' || type === 'average-life-span') return d.sourceY
-    })
-    .transition()
-    .duration(1000)
-    .attr('x', (d, i) => {
       return d.targetX
     })
     .attr('y', (d, i) => {
@@ -205,8 +192,6 @@ function databind(data, custom, lifeSpan, type) {
     // can't use .style!
 
   let exitSel = join.exit()
-    .transition()
-    .duration(100)
     .attr('width', 0)
     .attr('height', 0)
     .remove()
