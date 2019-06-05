@@ -49,6 +49,15 @@ update(createData(globalLifeSpan), '#mid-twentieth-century-compare', { name: '',
 update(createData(globalLifeSpan), '#earlier-century-compare', { name: '', years: 0, birthExpectancy: 40, adultExpectancy: 59 }, 'average-life-span')
 update(createData(globalLifeSpan), '#current-century-compare', { name: '', years: 0, birthExpectancy: 71, adultExpectancy: -1 }, 'average-life-span') // 71 is the 72nd year, because the grid rows start from 0
 
+// 20th century
+update(createData(92), '#twentieth-century-rosa', { name: 'Rosa Parks', years: 92, birthExpectancy: 48, adultExpectancy: -1 }, 'multiple-life-span')
+update(createData(globalLifeSpan), '#twentieth-century-walt', { name: 'Walt Disney', years: 65, birthExpectancy: 48, adultExpectancy: -1 }, 'multiple-life-span')
+update(createData(84), '#twentieth-century-thomas', { name: 'Thomas Edison', years: 84, birthExpectancy: 48, adultExpectancy: -1 }, 'multiple-life-span')
+update(createData(globalLifeSpan), '#twentieth-century-eva', { name: 'Eva Perón', years: 33, birthExpectancy: 48, adultExpectancy: -1 }, 'multiple-life-span')
+update(createData(87), '#twentieth-century-elie', { name: 'Elie Wiesel', years: 87, birthExpectancy: 48, adultExpectancy: -1 }, 'multiple-life-span')
+update(createData(76), '#twentieth-century-stephen', { name: 'Stephen Hawking', years: 76, birthExpectancy: 48, adultExpectancy: -1 }, 'multiple-life-span')
+update(createData(84), '#twentieth-century-salvador', { name: 'Salvador Dalí', years: 84, birthExpectancy: 48, adultExpectancy: -1 }, 'multiple-life-span')
+
 function createData(years) {
   let data = []
 
