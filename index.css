@@ -37,8 +37,8 @@ a:hover {
 }
 
 .highlight {
-  margin-top: 40px;
-  margin-bottom: 40px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   font-family: 'Allerta Stencil', monospace;
   font-weight: regular;
   font-size: 15px;
@@ -58,8 +58,8 @@ a:hover {
 
 .ui.stackable.grid {
   padding: 0 15% 0 15%;
-  padding-top: 25px;
-  padding-bottom: 25px;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 canvas {
