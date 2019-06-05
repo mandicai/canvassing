@@ -39,20 +39,20 @@ update(createData(globalLifeSpan), '#eighteenth-century-jane', { name: 'Jane Aus
 update(createData(globalLifeSpan), '#eighteenth-century-mary', { name: 'Mary Wollstonecraft', years: 38, birthExpectancy: 40, adultExpectancy: 59 }, 'multiple-life-span')
 
 // 20th century comparisons
-update(createData(globalLifeSpan), '#early-twentieth-century-compare', { name: '', years: 0, birthExpectancy: 31, adultExpectancy: -1 }, 'average-life-span') // -1 means don't show that expectancy on the grid
-update(createData(globalLifeSpan), '#mid-twentieth-century-compare', { name: '', years: 0, birthExpectancy: 48, adultExpectancy: -1 }, 'average-life-span')
 update(createData(globalLifeSpan), '#earlier-century-compare', { name: '', years: 0, birthExpectancy: 40, adultExpectancy: 59 }, 'average-life-span')
-update(createData(globalLifeSpan), '#current-century-compare', { name: '', years: 0, birthExpectancy: 71, adultExpectancy: -1 }, 'average-life-span') // 71 is the 72nd year, because the grid rows start from 0
+update(createData(globalLifeSpan), '#early-twentieth-century-compare', { name: '', years: 0, birthExpectancy: 31 }, 'average-life-span')
+update(createData(globalLifeSpan), '#mid-twentieth-century-compare', { name: '', years: 0, birthExpectancy: 48 }, 'average-life-span')
+update(createData(globalLifeSpan), '#current-century-compare', { name: '', years: 0, birthExpectancy: 71 }, 'average-life-span') // 71 is the 72nd year, because the grid rows start from 0
 
 // 20th century
-update(createData(92), '#twentieth-century-rosa', { name: 'Rosa Parks', years: 92, birthExpectancy: 48, adultExpectancy: -1 }, 'multiple-life-span')
-update(createData(globalLifeSpan), '#twentieth-century-walt', { name: 'Walt Disney', years: 65, birthExpectancy: 48, adultExpectancy: -1 }, 'multiple-life-span')
-update(createData(84), '#twentieth-century-thomas', { name: 'Thomas Edison', years: 84, birthExpectancy: 48, adultExpectancy: -1 }, 'multiple-life-span')
-update(createData(globalLifeSpan), '#twentieth-century-eva', { name: 'Eva Perón', years: 33, birthExpectancy: 48, adultExpectancy: -1 }, 'multiple-life-span')
-update(createData(87), '#twentieth-century-elie', { name: 'Elie Wiesel', years: 87, birthExpectancy: 48, adultExpectancy: -1 }, 'multiple-life-span')
-update(createData(76), '#twentieth-century-stephen', { name: 'Stephen Hawking', years: 76, birthExpectancy: 48, adultExpectancy: -1 }, 'multiple-life-span')
-update(createData(84), '#twentieth-century-salvador', { name: 'Salvador Dalí', years: 84, birthExpectancy: 48, adultExpectancy: -1 }, 'multiple-life-span')
-update(createData(globalLifeSpan), '#twentieth-century-rachel', { name: 'Rachel Carson', years: 56, birthExpectancy: 48, adultExpectancy: -1 }, 'multiple-life-span')
+update(createData(92), '#twentieth-century-rosa', { name: 'Rosa Parks', years: 92, birthExpectancy: 48 }, 'multiple-life-span')
+update(createData(globalLifeSpan), '#twentieth-century-walt', { name: 'Walt Disney', years: 65, birthExpectancy: 48 }, 'multiple-life-span')
+update(createData(84), '#twentieth-century-thomas', { name: 'Thomas Edison', years: 84, birthExpectancy: 48 }, 'multiple-life-span')
+update(createData(globalLifeSpan), '#twentieth-century-eva', { name: 'Eva Perón', years: 33, birthExpectancy: 48 }, 'multiple-life-span')
+update(createData(87), '#twentieth-century-elie', { name: 'Elie Wiesel', years: 87, birthExpectancy: 48 }, 'multiple-life-span')
+update(createData(76), '#twentieth-century-stephen', { name: 'Stephen Hawking', years: 76, birthExpectancy: 48 }, 'multiple-life-span')
+update(createData(84), '#twentieth-century-salvador', { name: 'Salvador Dalí', years: 84, birthExpectancy: 48 }, 'multiple-life-span')
+update(createData(globalLifeSpan), '#twentieth-century-rachel', { name: 'Rachel Carson', years: 56, birthExpectancy: 48 }, 'multiple-life-span')
 
 function createData(years) {
   let data = []
@@ -151,17 +151,22 @@ function databind(data, custom, lifeSpan, type) {
 
       // life spans
       if (type === 'single-life-span' || type === 'multiple-life-span') {
-        if (i >= lifeSpan.birthExpectancy * 52 && i < lifeSpan.birthExpectancy * 52 + 52) return '#316CFF'
-        if (i >= lifeSpan.adultExpectancy * 52 && i < lifeSpan.adultExpectancy * 52 + 52) return '#32037C'
-        if (i < lifeSpan.years * 52 && i < globalLifeSpan * 52) return '#F98AB7'
-        if (i < lifeSpan.years * 52 && i >= globalLifeSpan * 52) return '#EABF07'
+        if (lifeSpan.years > globalLifeSpan) {
+          if (i >= (lifeSpan.years - lifeSpan.birthExpectancy) * 52 && i < (lifeSpan.years - lifeSpan.birthExpectancy) * 52 + 52) return '#316CFF'
+          if (i >= (lifeSpan.years - lifeSpan.adultExpectancy) * 52 && i < (lifeSpan.years - lifeSpan.adultExpectancy) * 52 + 52) return '#32037C'
+        } else {
+          if (i >= (globalLifeSpan - lifeSpan.birthExpectancy) * 52 && i < (globalLifeSpan - lifeSpan.birthExpectancy) * 52 + 52) return '#316CFF'
+          if (i >= (globalLifeSpan - lifeSpan.adultExpectancy) * 52 && i < (globalLifeSpan - lifeSpan.adultExpectancy) * 52 + 52) return '#32037C'
+        }
+        if (i < (lifeSpan.years - globalLifeSpan) * 52) return '#EABF07'
+        if (i >= (globalLifeSpan - lifeSpan.years) * 52) return '#F98AB7'
         else return '#C7C6C5'
       }
 
       // average
       if (type === 'average-life-span') {
-        if (i >= lifeSpan.birthExpectancy * 52 && i < lifeSpan.birthExpectancy * 52 + 52) return '#316CFF'
-        if (i >= lifeSpan.adultExpectancy * 52 && i < lifeSpan.adultExpectancy * 52 + 52) return '#32037C'
+        if (i >= (globalLifeSpan - lifeSpan.birthExpectancy) * 52 && i < (globalLifeSpan - lifeSpan.birthExpectancy) * 52 + 52) return '#316CFF'
+        if (i >= (globalLifeSpan - lifeSpan.adultExpectancy) * 52 && i < (globalLifeSpan - lifeSpan.adultExpectancy) * 52 + 52) return '#32037C'
         else return '#C7C6C5'
       }
 
